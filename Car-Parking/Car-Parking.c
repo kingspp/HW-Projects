@@ -1,3 +1,10 @@
+/*
+Car-Parking Project
+@Author: Prathyush SP
+
+This program is used to diplay the free slots in the car parking lot.
+*/
+
 // LCD module connections
 sbit LCD_RS at RC2_bit;
 sbit LCD_EN at RC3_bit;
@@ -13,12 +20,12 @@ sbit LCD_D6_Direction at TRISC6_bit;
 sbit LCD_D7_Direction at TRISC7_bit;
 // End LCD module connections
 
-#define slot0 PORTB.F0
-
+//Declare Slots
 int slot[8];
+//Masking Variables
 int mask=0x80;
 
-
+// Initialization Function
 void init()
 {
 	int i=0;
@@ -31,6 +38,7 @@ void init()
 		slot[i]=0;
 }
 
+//Cear Line Function
 void clearLine(int l)
 {
 	int i;
@@ -38,15 +46,15 @@ void clearLine(int l)
 		LCD_Out(l,i," ");
 }
 
-
-
+//Check Slot Function (Most Important Function)
 void checkSlot(int port)
 {
 	int i,j;
 	for(i=0,j=7;i<8;i++)
-		slot[j]= (port & (mask>>i)) >> j--;
+		slot[j]= (port & (mask>>i)) >> j--; //(Most Important Logic)
 }
 
+//Print Slot Function
 void printSlot(){
 	int i=0;
 	int j=1;
